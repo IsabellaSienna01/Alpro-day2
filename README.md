@@ -181,16 +181,23 @@ go run cmd/main.go seed
 ## Screenshot Hasil
 1. Menambahkan data dengan endpoint `POST http://localhost:8080/users`
 <br>
-![post](img/post.png)
+
+![post](/img/post.png)
+
 
 2. Mengambil semua data user dengan endpoint `GET http://localhost:8080/users`
 <br>
-![getall](img/getall.png)
+
+![getall](/img/getall.png)
+
 
 3. Mengambil data user dengan ID 1 dengan endpoint `GET http://localhost:8080/users/1`
 <br>
-![getid](img/get-id.png)
+
+![getid](/img/get-id.png)
+
 
 4. Mengambil data user yang tidak terdaftar dengan endpoint `GET http://localhost:8080/users/6`
 <br>
-![getnotfound](img/get-id-notfound.png)
+
+![getnotfound](/img/get-id-notfound.png)
