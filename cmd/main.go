@@ -1,19 +1,22 @@
 package main
 
 import (
-    "log"
-    "github.com/gin-gonic/gin"
-    "github.com/joho/godotenv"
-    "github.com/Mobilizes/materi-be-alpro/config"
-    "github.com/Mobilizes/materi-be-alpro/database/entities"
-    "github.com/Mobilizes/materi-be-alpro/modules/user"
-    userController "github.com/Mobilizes/materi-be-alpro/modules/user/controller"
-    userRepository "github.com/Mobilizes/materi-be-alpro/modules/user/repository"
-    userService "github.com/Mobilizes/materi-be-alpro/modules/user/service"
+	"log"
+	"os"
 
-    "github.com/Mobilizes/materi-be-alpro/modules/auth"
-    authController "github.com/Mobilizes/materi-be-alpro/modules/auth/controller"
-    authService "github.com/Mobilizes/materi-be-alpro/modules/auth/service"
+	"github.com/Mobilizes/materi-be-alpro/config"
+	"github.com/Mobilizes/materi-be-alpro/database/entities"
+	"github.com/Mobilizes/materi-be-alpro/database/seeders"
+	"github.com/Mobilizes/materi-be-alpro/modules/user"
+	userController "github.com/Mobilizes/materi-be-alpro/modules/user/controller"
+	userRepository "github.com/Mobilizes/materi-be-alpro/modules/user/repository"
+	userService "github.com/Mobilizes/materi-be-alpro/modules/user/service"
+	"github.com/gin-gonic/gin"
+	"github.com/joho/godotenv"
+
+	"github.com/Mobilizes/materi-be-alpro/modules/auth"
+	authController "github.com/Mobilizes/materi-be-alpro/modules/auth/controller"
+	authService "github.com/Mobilizes/materi-be-alpro/modules/auth/service"
 )
 
 func main() {
@@ -26,6 +29,11 @@ func main() {
     // Connect to database
     db := config.SetupDatabase()
 
+    if len(os.Args) > 1 && os.Args[1] == "seed"{
+        seeders.RunUserSeeder(db)
+        return
+    }
+
     // Auto migrate the user module
     db.AutoMigrate(&entities.User{})
 
@@ -33,7 +41,7 @@ func main() {
     r := gin.Default()
 
     // Setup routes group
-    api := r.Group("/api")
+    api := r.Group("")
 
     // Setup Services
     jwtSvc := authService.NewJWTService()
